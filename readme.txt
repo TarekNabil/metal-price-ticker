@@ -43,13 +43,11 @@ Yes, you can customize the update interval from the plugin settings page.
 * Initial release.
 
 == Upgrade Notice ==
-
+ 
 = 1.0.0 =
 * Initial release.
 
-== Arbitrary section ==
-
-Shortcode breakdown:
+== shortcode usage ==
 
 [ mpt_metal_price
     metal   = "XAU" // supports: ('XAU', 'XAG', 'XPT', 'XPD')
