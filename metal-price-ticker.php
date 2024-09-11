@@ -41,7 +41,7 @@ function mpt_add_settings_page() {
 function mpt_render_settings_page() {
     ?>
     <div class="wrap">
-        <h1>metal Price Ticker Settings</h1>
+        <h1>Metal Price Ticker Settings</h1>
         <form method="post" action="options.php">
             <?php
             settings_fields('mpt_settings_group');
@@ -56,7 +56,7 @@ function mpt_render_settings_page() {
         // Display the metal prices
         $metal_prices = mpt_get_all_metal_prices();
         if(is_array($metal_prices)) {
-            echo ' Metal Prices: ' . $metal_prices['XAU']['name'] . ' Ask: ' . $metal_prices['XAU']['ask'] . ' Bid: ' . $metal_prices['XAU']['bid'] . ' Bid Time: ' . $metal_prices['XAU']['bid_time'];
+            echo ' Metal Prices Example : ' . $metal_prices['XAU']['name'] . ' Ask: ' . $metal_prices['XAU']['ask'] . ' Bid: ' . $metal_prices['XAU']['bid'] . ' Bid Time: ' . $metal_prices['XAU']['bid_time'];
         }
         
         ?>
@@ -73,7 +73,7 @@ function mpt_register_settings() {
     register_setting('mpt_settings_group', 'mpt_fastmarkets_password');
 
     add_settings_section(
-        'mpt_settings_section',       // ID
+        'mpt_Fastmarkets_settings_section',       // ID
         'Fastmarkets API Settings',   // Title
         null,                         // Callback
         'mpt-settings'                // Page
@@ -84,7 +84,7 @@ function mpt_register_settings() {
         'API User',                   // Title
         'mpt_fastmarkets_user_callback', // Callback
         'mpt-settings',               // Page
-        'mpt_settings_section'        // Section
+        'mpt_Fastmarkets_settings_section'        // Section
     );
 
     add_settings_field(
@@ -92,20 +92,22 @@ function mpt_register_settings() {
         'API Password',               // Title
         'mpt_fastmarkets_password_callback', // Callback
         'mpt-settings',               // Page
-        'mpt_settings_section'        // Section
-    );
-    // add setting section for updatae interval
-    add_settings_section(
-        'mpt_settings_section',       // ID
-        'Update Interval',   // Title
-        null,                         // Callback
-        'mpt-settings'                // Page
+        'mpt_Fastmarkets_settings_section'        // Section
     );
     // add setting field for update interval and set default value to be 10
     register_setting('mpt_settings_group', 'mpt_update_interval', array(
         
         'default' => 10,
     ));
+    // add setting section for updatae interval
+
+    add_settings_section(
+        'mpt_update_interval_section',       // ID
+        'Update Interval',   // Title
+        null,                         // Callback
+        'mpt-settings'                // Page
+    );
+    
 
 
     add_settings_field(
@@ -113,7 +115,7 @@ function mpt_register_settings() {
         'Update Interval',                   // Title
         'mpt_update_interval_callback', // Callback
         'mpt-settings',               // Page
-        'mpt_settings_section'        // Section
+        'mpt_update_interval_section'        // Section
     );
 }
 

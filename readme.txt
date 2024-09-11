@@ -1,14 +1,14 @@
 === Metal Price Ticker ===
-Contributors: tareknabil
+Contributors: TarekNabil
 Donate link: https://tareknabil.net
-Tags: metal, price, ticker, elementor
+Tags: metal price, ticker, elementor, wordpress plugin
 Requires at least: 5.0
-Tested up to: 6.0
+Tested up to: 6.6.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Metal Price Ticker is a plugin and Elementor add-on to display metal prices ticker.
+Metal Price Ticker is a wordpress plugin and Elementor add-on to display metal prices ticker.
 
 == Description ==
 
@@ -25,7 +25,8 @@ Metal Price Ticker is a WordPress plugin that allows you to display real-time me
 = How do I add the ticker to my page? =
 
 You can add the ticker to your page using the Elementor widget provided by the plugin.
-You can also use the shortcode anywhere at your website using this example:
+You can also use the shortcode anywhere at your website.
+Example:
 [mpt_metal_price metal="XAU" request="ask" currency="USD"]
 
 = Can I customize the update interval? =
