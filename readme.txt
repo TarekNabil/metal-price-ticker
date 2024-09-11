@@ -27,7 +27,7 @@ Metal Price Ticker is a WordPress plugin that allows you to display real-time me
 You can add the ticker to your page using the Elementor widget provided by the plugin.
 You can also use the shortcode anywhere at your website.
 Example:
-[mpt_metal_price metal="XAU" request="ask" currency="USD"]
+[mpt_metal_price metal="XAU" request="ask" currency="USD" karats="24"]
 
 = Can I customize the update interval? =
 
@@ -54,6 +54,7 @@ Yes, you can customize the update interval from the plugin settings page.
     metal   = "XAU" // supports: ('XAU', 'XAG', 'XPT', 'XPD')
     request = "ask" // supports: ('ask', 'bid', 'name', 'bid_time')
     currency= "USD" // supports: ('USD', 'AED', 'SAR') // Not used if you are requesting 'name' or 'bid_time'
+    karats   = "24"  // supports: ('24', '22', '18', '14', '10') // only works for Gold
 ]
 == License ==
 

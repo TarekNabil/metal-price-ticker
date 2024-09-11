@@ -13,8 +13,20 @@ jQuery(document).ready(function($) {
         // return amount * conversionRates[currency];
         return (amount * conversionRates[currency]).toFixed(3);
     }
-
-    // Function to fetch some text from the backend and return it
+    // calculate Gold price for specific karats
+    function calculateGoldPrice(amount, karats) {
+        // Define the karats rates
+        const karatsRates = {
+            '24': 1,
+            '22': 0.917,
+            '21': 0.875,
+            '18': 0.75,
+            '14': 0.583,
+            '10': 0.417
+        };
+        return amount * karatsRates[karats];
+    }
+    // Function to fetch metal prices from the backend and return it
 
     function updateMetalPrices(callback) {
         // Make an AJAX request
@@ -76,6 +88,8 @@ jQuery(document).ready(function($) {
             var metal = $(element).attr('mpt-metal');
             // get the request of the element
             var request = $(element).attr('mpt-request');
+            // get the karats of the element
+            var karats = $(element).attr('mpt-karats');
             
 
             // if request is bid_time or name, fill the element with the data from the response
@@ -86,10 +100,13 @@ jQuery(document).ready(function($) {
             }
             // if request is ask or bid, update the amount and currency
             if (request == 'ask' || request == 'bid') {
+                // calculate the gold price for the specific karats
+                var newPrice = (metal == 'XAU') ? calculateGoldPrice(response[metal][request], karats) : response[metal][request];
+
                 // extract old ask or bid price
                 var oldPrice = $(element).find('.amount').text();
                 // extract new ask or bid price
-                var newPrice = currency_converter(response[metal][request], currency);
+                newPrice = currency_converter(newPrice, currency);
                 // calculate the difference between the old and new price
                 var diff = newPrice - oldPrice;
                 // update the amount and currency of the element
