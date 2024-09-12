@@ -1,3 +1,11 @@
+== Warning ==
+
+This plugin is still under development and may not be stable. Use it at your own risk.
+
+== Testing Notice ==
+
+Please note that the results provided by this plugin are still being tested with specialists.
+
 === Metal Price Ticker ===
 Contributors: TarekNabil
 Donate link: https://tareknabil.net
