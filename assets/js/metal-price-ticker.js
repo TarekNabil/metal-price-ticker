@@ -5,10 +5,9 @@ jQuery(document).ready(function($) {
     var conversionRates = {
         'QAR': 3.64,
         'AED': 3.675,
-            'SAR': 3.75,
-            'USD': 1
-        };
-
+        'SAR': 3.75,
+        'USD': 1
+    };
     // Function to fetch metal prices from the backend and return it
 
     function updateMetalPrices(callback) {
@@ -22,7 +21,7 @@ jQuery(document).ready(function($) {
                 security: ajax_object.ajax_nonce, // Security nonce
             },
             success: function(response) {
-                // update metal prices
+               // update metal prices
                 updateTextContent(response);
             },
             error: function(error) {
@@ -74,8 +73,6 @@ jQuery(document).ready(function($) {
             var unit = $(element).attr('mpt-unit');
             
             var newPrice = 0;
-            
-
             // if request is bid_time or name, fill the element with the data from the response
             if (request == 'bid_time' || request == 'name'){
                 $(element).text(response[metal][request]);

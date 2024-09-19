@@ -11,7 +11,9 @@
  */
 // add plugin version to be used in enqueued assets
 define('MPT_VERSION', '1.0.1');
-
+//ToDO: add the plugin text domain
+//TODO: Production: remove random versioning from enqueued assets and add plugin version 
+//TODO: Production: add proper error handling and remove any error_log tests
 // Enqueue CSS and JS
 add_action('wp_enqueue_scripts', 'mpt_enqueue_assets');
 function mpt_enqueue_assets() {
@@ -50,7 +52,6 @@ function mpt_enqueue_assets() {
             'QAR' => 3.64,
         )
     ));
-    
 }
 
 
@@ -79,18 +80,6 @@ function mpt_render_settings_page() {
             
             ?>
         </form>
-        <!-- display metal prices  -->
-        <div id="mpt-metal-prices"></div>
-        <?php
-        // Display the metal prices
-        $metal_prices = mpt_get_all_metal_prices();
-        if(is_array($metal_prices)) {
-            echo ' Metal Prices Example : ' . $metal_prices['XAU']['name'] . ' Ask: ' . $metal_prices['XAU']['ask'] . ' Bid: ' . $metal_prices['XAU']['bid'] . ' Bid Time: ' . $metal_prices['XAU']['bid_time'];
-        }
-        
-        ?>
-
-        
     </div>
     <?php
 }
@@ -137,7 +126,6 @@ function mpt_register_settings() {
         'mpt-settings'                // Page
     );
     
-
 
     add_settings_field(
         'mpt_update_interval',       // ID
@@ -316,13 +304,11 @@ function mpt_get_all_metal_prices() {
     
     if (!$mpt_metal_prices) {
         //get prices from fastmarkets
-        error_log('fetch');
         $mpt_metal_prices = mpt_fetch_metal_prices();
     }
     //check last update
     $mpt_last_update = get_option('mpt_last_update');
     if (time() - $mpt_last_update > 10) {//TODO: change to setting option
-        error_log('update');
         $mpt_metal_prices = mpt_fetch_metal_prices();
     }
     
@@ -335,7 +321,6 @@ function mpt_fetch_metal_prices(){
     $password = get_option('mpt_fastmarkets_password');
     $url = "https://pro.fastmarkets.com/feeds/?usr=$user&pwd=$password";
     $response = wp_remote_get($url);
-    // error_log(print_r($response, true));
     if (is_wp_error($response)) {
         echo 'Failed to fetch data.';
         return;
@@ -347,7 +332,6 @@ function mpt_fetch_metal_prices(){
     $xml = simplexml_load_string($data);
     
     if ($xml === false) {
-        // error_log($data);
         echo 'Failed to parse XML.';
         return;
     }
