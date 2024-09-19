@@ -2,13 +2,15 @@
 /**
  * Plugin Name: Metal Price Ticker
  * Description: Plugin and Elementor add-on to display Metal prices ticker.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Tarek Nabil
  * Author URI: https://tareknabil.net
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: metal-price-ticker
  */
+// add plugin version to be used in enqueued assets
+define('MPT_VERSION', '1.0.1');
 
 // Enqueue CSS and JS
 add_action('wp_enqueue_scripts', 'mpt_enqueue_assets');
