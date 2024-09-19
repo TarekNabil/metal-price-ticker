@@ -1,31 +1,14 @@
 jQuery(document).ready(function($) {
-
-    function currency_converter(amount , currency) {
-        
-        // Define the conversion rates
-        const conversionRates = {
-            'AED': 3.67,
+    var karatsRates = ajax_object.karats_rates;
+    var unitRates = ajax_object.unit_rates;
+    var fees = ajax_object.fees;    
+    var conversionRates = {
+        'QAR': 3.64,
+        'AED': 3.675,
             'SAR': 3.75,
             'USD': 1
         };
 
-        // Convert the amount based on the to_currency three decimal places
-        // return amount * conversionRates[currency];
-        return (amount * conversionRates[currency]).toFixed(3);
-    }
-    // calculate Gold price for specific karats
-    function calculateGoldPrice(amount, karats) {
-        // Define the karats rates
-        const karatsRates = {
-            '24': 1,
-            '22': 0.917,
-            '21': 0.875,
-            '18': 0.75,
-            '14': 0.583,
-            '10': 0.417
-        };
-        return amount * karatsRates[karats];
-    }
     // Function to fetch metal prices from the backend and return it
 
     function updateMetalPrices(callback) {
@@ -37,11 +20,8 @@ jQuery(document).ready(function($) {
             data: {
                 action: 'mpt_metal_price_updater_action', // The custom action name
                 security: ajax_object.ajax_nonce, // Security nonce
-                some_data: 'example_data' // Any data you want to send
             },
             success: function(response) {
-                //  log the json response
-                console.log('response:', response);
                 // update metal prices
                 updateTextContent(response);
             },
@@ -90,6 +70,10 @@ jQuery(document).ready(function($) {
             var request = $(element).attr('mpt-request');
             // get the karats of the element
             var karats = $(element).attr('mpt-karats');
+            // get the unit of the element
+            var unit = $(element).attr('mpt-unit');
+            
+            var newPrice = 0;
             
 
             // if request is bid_time or name, fill the element with the data from the response
@@ -100,13 +84,25 @@ jQuery(document).ready(function($) {
             }
             // if request is ask or bid, update the amount and currency
             if (request == 'ask' || request == 'bid') {
-                // calculate the gold price for the specific karats
-                var newPrice = (metal == 'XAU') ? calculateGoldPrice(response[metal][request], karats) : response[metal][request];
+                newPrice = response[metal][request];
+                // convert the amount to float
+                newPrice = parseFloat(newPrice);
+                // add custom fees to the price
+                newPrice = newPrice + parseFloat(fees.custom_fees);
 
+                // convert the amount to the specific unit
+                newPrice = newPrice * unitRates[unit];
+
+                // calculate the gold price for the specific karats
+                if (metal == 'XAU') {
+                    newPrice = newPrice * karatsRates[karats];
+                }
                 // extract old ask or bid price
                 var oldPrice = $(element).find('.amount').text();
                 // extract new ask or bid price
-                newPrice = currency_converter(newPrice, currency);
+                newPrice = newPrice * conversionRates[currency];
+                newPrice = parseFloat(newPrice.toFixed(2));
+
                 // calculate the difference between the old and new price
                 var diff = newPrice - oldPrice;
                 // update the amount and currency of the element
